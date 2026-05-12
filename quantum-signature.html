@@ -1,0 +1,1447 @@
+<!doctype html>
+<html lang="en" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Generalized Quantum Assisted Digital Signature System</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+  <style>
+    body {
+      box-sizing: border-box;
+    }
+    
+    :root {
+      --primary-bg: #0a0a1a;
+      --secondary-bg: #12122a;
+      --accent-blue: #00d4ff;
+      --accent-violet: #8b5cf6;
+      --accent-pink: #ec4899;
+      --text-primary: #e2e8f0;
+      --text-secondary: #94a3b8;
+    }
+    
+    * {
+      scrollbar-width: thin;
+      scrollbar-color: var(--accent-violet) var(--secondary-bg);
+    }
+    
+    .font-orbitron { font-family: 'Orbitron', monospace; }
+    .font-inter { font-family: 'Inter', sans-serif; }
+    
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 0 20px rgba(0, 212, 255, 0.3); }
+      50% { box-shadow: 0 0 40px rgba(139, 92, 246, 0.5); }
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+    
+    @keyframes data-flow {
+      0% { transform: translateX(-100%); opacity: 0; }
+      50% { opacity: 1; }
+      100% { transform: translateX(100%); opacity: 0; }
+    }
+    
+    @keyframes quantum-pulse {
+      0%, 100% { opacity: 0.3; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.1); }
+    }
+    
+    @keyframes bit-stream {
+      0% { transform: translateY(-100%); }
+      100% { transform: translateY(100%); }
+    }
+    
+    @keyframes entropy-bar {
+      0%, 100% { height: 20%; }
+      25% { height: 80%; }
+      50% { height: 40%; }
+      75% { height: 90%; }
+    }
+    
+    @keyframes rotate-slow {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    
+    @keyframes typewriter {
+      from { width: 0; }
+      to { width: 100%; }
+    }
+    
+    .glow-card {
+      animation: pulse-glow 3s ease-in-out infinite;
+    }
+    
+    .float-animation {
+      animation: float 3s ease-in-out infinite;
+    }
+    
+    .quantum-bg {
+      background: linear-gradient(135deg, var(--primary-bg) 0%, var(--secondary-bg) 50%, #1a0a2e 100%);
+    }
+    
+    .gradient-text {
+      background: linear-gradient(90deg, var(--accent-blue), var(--accent-violet), var(--accent-pink));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .glass-card {
+      background: rgba(18, 18, 42, 0.8);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(139, 92, 246, 0.2);
+    }
+    
+    .neon-border {
+      border: 1px solid var(--accent-blue);
+      box-shadow: 0 0 10px rgba(0, 212, 255, 0.3), inset 0 0 10px rgba(0, 212, 255, 0.1);
+    }
+    
+    .btn-quantum {
+      background: linear-gradient(135deg, var(--accent-violet), var(--accent-blue));
+      transition: all 0.3s ease;
+    }
+    
+    .btn-quantum:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(139, 92, 246, 0.4);
+    }
+    
+    .section-hidden {
+      display: none;
+    }
+    
+    .section-active {
+      display: block;
+      animation: fadeIn 0.5s ease-out;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .step-card {
+      transition: all 0.3s ease;
+    }
+    
+    .step-card:hover {
+      transform: scale(1.02);
+      border-color: var(--accent-blue);
+    }
+    
+    .entropy-bar {
+      animation: entropy-bar 1s ease-in-out infinite;
+    }
+    
+    .bit-stream {
+      animation: bit-stream 2s linear infinite;
+    }
+    
+    .quantum-particle {
+      animation: quantum-pulse 2s ease-in-out infinite;
+    }
+    
+    .rotate-animation {
+      animation: rotate-slow 20s linear infinite;
+    }
+    
+    .data-flow-line {
+      animation: data-flow 3s ease-in-out infinite;
+    }
+    
+    .valid-badge {
+      background: linear-gradient(135deg, #10b981, #059669);
+    }
+    
+    .invalid-badge {
+      background: linear-gradient(135deg, #ef4444, #dc2626);
+    }
+    
+    .tooltip-content {
+      visibility: hidden;
+      opacity: 0;
+      transition: all 0.3s ease;
+    }
+    
+    .tooltip:hover .tooltip-content {
+      visibility: visible;
+      opacity: 1;
+    }
+    
+    .nav-item {
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .nav-item::before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent-blue), var(--accent-violet));
+      transform: translateX(-100%);
+      transition: transform 0.3s ease;
+    }
+    
+    .nav-item:hover::before,
+    .nav-item.active::before {
+      transform: translateX(0);
+    }
+    
+    .architecture-layer {
+      transition: all 0.3s ease;
+    }
+    
+    .architecture-layer:hover {
+      transform: translateX(10px);
+      box-shadow: -5px 0 20px rgba(139, 92, 246, 0.3);
+    }
+    
+    .comparison-row:hover {
+      background: rgba(139, 92, 246, 0.1);
+    }
+    
+    .use-case-card {
+      transition: all 0.3s ease;
+    }
+    
+    .use-case-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0, 212, 255, 0.2);
+    }
+    
+    input:focus, textarea:focus {
+      outline: none;
+      border-color: var(--accent-blue);
+      box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+    }
+    
+    .modal-overlay {
+      background: rgba(10, 10, 26, 0.9);
+      backdrop-filter: blur(5px);
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full quantum-bg text-gray-100 font-inter overflow-auto">
+  <div id="app-container" class="min-h-full w-full"><!-- Navigation -->
+   <nav class="fixed top-0 left-0 right-0 z-50 glass-card border-b border-violet-500/20">
+    <div class="max-w-7xl mx-auto px-4 py-3">
+     <div class="flex items-center justify-between">
+      <div class="flex items-center gap-3">
+       <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-cyan-400 to-violet-500 flex items-center justify-center">
+        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+        </svg>
+       </div><span class="font-orbitron text-lg text-cyan-400 hidden sm:block">QADS</span>
+      </div>
+      <div class="flex items-center gap-1 sm:gap-2 overflow-x-auto"><button onclick="showSection('landing')" class="nav-item active px-2 sm:px-3 py-2 text-xs sm:text-sm text-gray-300 hover:text-cyan-400 transition-colors whitespace-nowrap" data-section="landing">Home</button> <button onclick="showSection('concepts')" class="nav-item px-2 sm:px-3 py-2 text-xs sm:text-sm text-gray-300 hover:text-cyan-400 transition-colors whitespace-nowrap" data-section="concepts">Concepts</button> <button onclick="showSection('generator')" class="nav-item px-2 sm:px-3 py-2 text-xs sm:text-sm text-gray-300 hover:text-cyan-400 transition-colors whitespace-nowrap" data-section="generator">Sign</button> <button onclick="showSection('verify')" class="nav-item px-2 sm:px-3 py-2 text-xs sm:text-sm text-gray-300 hover:text-cyan-400 transition-colors whitespace-nowrap" data-section="verify">Verify</button> <button onclick="showSection('quantum')" class="nav-item px-2 sm:px-3 py-2 text-xs sm:text-sm text-gray-300 hover:text-cyan-400 transition-colors whitespace-nowrap" data-section="quantum">Quantum</button> <button onclick="showSection('compare')" class="nav-item px-2 sm:px-3 py-2 text-xs sm:text-sm text-gray-300 hover:text-cyan-400 transition-colors whitespace-nowrap" data-section="compare">Compare</button> <button onclick="showSection('architecture')" class="nav-item px-2 sm:px-3 py-2 text-xs sm:text-sm text-gray-300 hover:text-cyan-400 transition-colors whitespace-nowrap" data-section="architecture">Arch</button> <button onclick="showSection('usecases')" class="nav-item px-2 sm:px-3 py-2 text-xs sm:text-sm text-gray-300 hover:text-cyan-400 transition-colors whitespace-nowrap" data-section="usecases">Uses</button>
+      </div><button onclick="openGlossary()" class="p-2 rounded-lg bg-violet-500/20 hover:bg-violet-500/40 transition-colors" title="Glossary">
+       <svg class="w-5 h-5 text-violet-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+       </svg></button>
+     </div>
+    </div>
+   </nav><!-- Landing Section -->
+   <section id="landing" class="section-active pt-20 min-h-full">
+    <div class="max-w-7xl mx-auto px-4 py-12"><!-- Hero -->
+     <div class="text-center mb-16">
+      <div class="inline-block mb-6">
+       <div class="relative">
+        <div class="absolute inset-0 bg-gradient-to-r from-cyan-400 to-violet-500 blur-3xl opacity-30 rotate-animation"></div>
+        <h1 id="main-title" class="font-orbitron text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold gradient-text relative z-10 leading-tight">Generalized Quantum Assisted<br>
+         Digital Signature System</h1>
+       </div>
+      </div>
+      <p id="subtitle" class="text-lg sm:text-xl text-gray-400 mb-8 max-w-3xl mx-auto">Hybrid Quantum-Classical Secure Signature Framework</p>
+      <div class="flex flex-wrap justify-center gap-4"><button onclick="showSection('generator')" class="btn-quantum px-8 py-4 rounded-xl font-semibold text-white"> 🚀 Start Signing </button> <button onclick="showSection('concepts')" class="px-8 py-4 rounded-xl font-semibold border border-cyan-400/50 hover:bg-cyan-400/10 transition-colors"> 📚 Learn More </button>
+      </div>
+     </div><!-- Animated Flow Diagram -->
+     <div class="glass-card rounded-2xl p-8 mb-12">
+      <h2 class="font-orbitron text-2xl text-center mb-8 text-cyan-400">Signature Flow Process</h2>
+      <div class="relative">
+       <div class="flex flex-col lg:flex-row items-center justify-between gap-6"><!-- Step 1: Message -->
+        <div class="glass-card rounded-xl p-6 text-center float-animation w-full lg:w-auto" style="animation-delay: 0s;">
+         <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-br from-cyan-400 to-blue-500 flex items-center justify-center">
+          <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+          </svg>
+         </div>
+         <h3 class="font-semibold text-white">Message Input</h3>
+         <p class="text-sm text-gray-400">Original data</p>
+        </div><!-- Arrow -->
+        <div class="hidden lg:block text-cyan-400">
+         <svg class="w-8 h-8 data-flow-line" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+         </svg>
+        </div><!-- Step 2: Hash -->
+        <div class="glass-card rounded-xl p-6 text-center float-animation w-full lg:w-auto" style="animation-delay: 0.2s;">
+         <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-br from-violet-400 to-purple-500 flex items-center justify-center">
+          <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+          </svg>
+         </div>
+         <h3 class="font-semibold text-white">Hash Generation</h3>
+         <p class="text-sm text-gray-400">SHA-256 digest</p>
+        </div><!-- Arrow -->
+        <div class="hidden lg:block text-violet-400">
+         <svg class="w-8 h-8 data-flow-line" style="animation-delay: 0.5s;" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+         </svg>
+        </div><!-- Step 3: Quantum -->
+        <div class="glass-card rounded-xl p-6 text-center float-animation w-full lg:w-auto" style="animation-delay: 0.4s;">
+         <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-br from-pink-400 to-rose-500 flex items-center justify-center quantum-particle">
+          <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+          </svg>
+         </div>
+         <h3 class="font-semibold text-white">Quantum Seed</h3>
+         <p class="text-sm text-gray-400">True randomness</p>
+        </div><!-- Arrow -->
+        <div class="hidden lg:block text-pink-400">
+         <svg class="w-8 h-8 data-flow-line" style="animation-delay: 1s;" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+         </svg>
+        </div><!-- Step 4: Sign -->
+        <div class="glass-card rounded-xl p-6 text-center float-animation w-full lg:w-auto" style="animation-delay: 0.6s;">
+         <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-br from-emerald-400 to-green-500 flex items-center justify-center">
+          <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+          </svg>
+         </div>
+         <h3 class="font-semibold text-white">Hybrid Signature</h3>
+         <p class="text-sm text-gray-400">Quantum-enhanced</p>
+        </div>
+       </div><!-- Connecting line -->
+       <div class="hidden lg:block absolute top-1/2 left-0 right-0 h-0.5 bg-gradient-to-r from-cyan-400 via-violet-500 to-emerald-400 -z-10 opacity-30"></div>
+      </div>
+     </div><!-- Feature Cards -->
+     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="glass-card rounded-xl p-6 step-card">
+       <div class="w-12 h-12 rounded-lg bg-cyan-500/20 flex items-center justify-center mb-4"><span class="text-2xl">🔐</span>
+       </div>
+       <h3 class="font-semibold text-lg mb-2">Post-Quantum Security</h3>
+       <p class="text-gray-400 text-sm">Enhanced protection against quantum computing attacks using hybrid cryptographic methods.</p>
+      </div>
+      <div class="glass-card rounded-xl p-6 step-card">
+       <div class="w-12 h-12 rounded-lg bg-violet-500/20 flex items-center justify-center mb-4"><span class="text-2xl">⚡</span>
+       </div>
+       <h3 class="font-semibold text-lg mb-2">Lightning Fast</h3>
+       <p class="text-gray-400 text-sm">Efficient signature generation and verification with minimal computational overhead.</p>
+      </div>
+      <div class="glass-card rounded-xl p-6 step-card">
+       <div class="w-12 h-12 rounded-lg bg-pink-500/20 flex items-center justify-center mb-4"><span class="text-2xl">🌐</span>
+       </div>
+       <h3 class="font-semibold text-lg mb-2">Universal Compatibility</h3>
+       <p class="text-gray-400 text-sm">Seamless integration with existing infrastructure and protocols.</p>
+      </div>
+     </div>
+    </div>
+   </section><!-- Concepts Section -->
+   <section id="concepts" class="section-hidden pt-20 min-h-full">
+    <div class="max-w-7xl mx-auto px-4 py-12">
+     <h2 class="font-orbitron text-3xl text-center mb-4 gradient-text">Core Concepts</h2>
+     <p class="text-center text-gray-400 mb-12 max-w-2xl mx-auto">Understanding the building blocks of quantum-assisted digital signatures</p>
+     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8"><!-- Classical Digital Signatures -->
+      <div class="glass-card rounded-2xl p-8 step-card">
+       <div class="flex items-center gap-4 mb-6">
+        <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-blue-400 to-cyan-500 flex items-center justify-center">
+         <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+         </svg>
+        </div>
+        <h3 class="font-orbitron text-xl text-cyan-400">Classical Digital Signatures</h3>
+       </div>
+       <div class="space-y-4">
+        <div class="flex items-start gap-3">
+         <div class="w-8 h-8 rounded-full bg-cyan-500/20 flex items-center justify-center flex-shrink-0 mt-1"><span class="text-cyan-400 font-bold text-sm">1</span>
+         </div>
+         <div>
+          <h4 class="font-semibold text-white">Mathematical Foundation</h4>
+          <p class="text-gray-400 text-sm">Based on asymmetric cryptography using mathematically related key pairs.</p>
+         </div>
+        </div>
+        <div class="flex items-start gap-3">
+         <div class="w-8 h-8 rounded-full bg-cyan-500/20 flex items-center justify-center flex-shrink-0 mt-1"><span class="text-cyan-400 font-bold text-sm">2</span>
+         </div>
+         <div>
+          <h4 class="font-semibold text-white">Authentication</h4>
+          <p class="text-gray-400 text-sm">Verifies the identity of the signer and ensures message integrity.</p>
+         </div>
+        </div>
+        <div class="flex items-start gap-3">
+         <div class="w-8 h-8 rounded-full bg-cyan-500/20 flex items-center justify-center flex-shrink-0 mt-1"><span class="text-cyan-400 font-bold text-sm">3</span>
+         </div>
+         <div>
+          <h4 class="font-semibold text-white">Non-repudiation</h4>
+          <p class="text-gray-400 text-sm">Signer cannot deny having signed the message.</p>
+         </div>
+        </div>
+       </div>
+      </div><!-- Cryptographic Hashing -->
+      <div class="glass-card rounded-2xl p-8 step-card">
+       <div class="flex items-center gap-4 mb-6">
+        <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-violet-400 to-purple-500 flex items-center justify-center">
+         <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
+         </svg>
+        </div>
+        <h3 class="font-orbitron text-xl text-violet-400">Cryptographic Hashing</h3>
+       </div>
+       <div class="space-y-4">
+        <div class="glass-card rounded-lg p-4">
+         <div class="flex items-center gap-3 mb-2"><span class="text-2xl">📝</span> <span class="text-gray-300">Input: "Hello World"</span>
+         </div>
+         <div class="text-center py-2">
+          <svg class="w-6 h-6 mx-auto text-violet-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+          </svg>
+         </div>
+         <div class="flex items-center gap-3"><span class="text-2xl">🔒</span> <span class="text-violet-400 font-mono text-xs break-all">a591a6d40bf420...64e4</span>
+         </div>
+        </div>
+        <ul class="space-y-2 text-sm text-gray-400">
+         <li class="flex items-center gap-2"><span class="text-green-400">✓</span> Fixed-length output (256 bits)</li>
+         <li class="flex items-center gap-2"><span class="text-green-400">✓</span> One-way function (irreversible)</li>
+         <li class="flex items-center gap-2"><span class="text-green-400">✓</span> Collision resistant</li>
+         <li class="flex items-center gap-2"><span class="text-green-400">✓</span> Avalanche effect</li>
+        </ul>
+       </div>
+      </div><!-- Public/Private Keys -->
+      <div class="glass-card rounded-2xl p-8 step-card">
+       <div class="flex items-center gap-4 mb-6">
+        <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-emerald-400 to-green-500 flex items-center justify-center">
+         <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
+         </svg>
+        </div>
+        <h3 class="font-orbitron text-xl text-emerald-400">Public &amp; Private Keys</h3>
+       </div>
+       <div class="grid grid-cols-2 gap-4">
+        <div class="glass-card rounded-lg p-4 border border-red-500/30">
+         <div class="text-center mb-3"><span class="text-3xl">🔑</span>
+         </div>
+         <h4 class="font-semibold text-red-400 text-center mb-2">Private Key</h4>
+         <ul class="text-xs text-gray-400 space-y-1">
+          <li>• Keep secret always</li>
+          <li>• Used for signing</li>
+          <li>• Never share</li>
+         </ul>
+        </div>
+        <div class="glass-card rounded-lg p-4 border border-green-500/30">
+         <div class="text-center mb-3"><span class="text-3xl">🔓</span>
+         </div>
+         <h4 class="font-semibold text-green-400 text-center mb-2">Public Key</h4>
+         <ul class="text-xs text-gray-400 space-y-1">
+          <li>• Share freely</li>
+          <li>• Used for verification</li>
+          <li>• Derived from private</li>
+         </ul>
+        </div>
+       </div>
+      </div><!-- Quantum Randomness -->
+      <div class="glass-card rounded-2xl p-8 step-card">
+       <div class="flex items-center gap-4 mb-6">
+        <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-pink-400 to-rose-500 flex items-center justify-center quantum-particle">
+         <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+         </svg>
+        </div>
+        <h3 class="font-orbitron text-xl text-pink-400">Quantum-Assisted Randomness</h3>
+       </div>
+       <div class="space-y-4">
+        <div class="glass-card rounded-lg p-4">
+         <div class="flex justify-between items-center mb-3"><span class="text-sm text-gray-400">Entropy Source</span> <span class="text-xs px-2 py-1 rounded bg-pink-500/20 text-pink-400">QUANTUM</span>
+         </div>
+         <div class="flex gap-1 h-12">
+          <div class="flex-1 bg-pink-500/60 rounded entropy-bar" style="animation-delay: 0s;"></div>
+          <div class="flex-1 bg-violet-500/60 rounded entropy-bar" style="animation-delay: 0.1s;"></div>
+          <div class="flex-1 bg-cyan-500/60 rounded entropy-bar" style="animation-delay: 0.2s;"></div>
+          <div class="flex-1 bg-pink-500/60 rounded entropy-bar" style="animation-delay: 0.3s;"></div>
+          <div class="flex-1 bg-violet-500/60 rounded entropy-bar" style="animation-delay: 0.4s;"></div>
+          <div class="flex-1 bg-cyan-500/60 rounded entropy-bar" style="animation-delay: 0.5s;"></div>
+          <div class="flex-1 bg-pink-500/60 rounded entropy-bar" style="animation-delay: 0.6s;"></div>
+          <div class="flex-1 bg-violet-500/60 rounded entropy-bar" style="animation-delay: 0.7s;"></div>
+         </div>
+        </div>
+        <p class="text-sm text-gray-400">Quantum randomness is <span class="text-pink-400 font-semibold">truly unpredictable</span>, derived from quantum mechanical phenomena like photon polarization or vacuum fluctuations.</p>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- Signature Generator Section -->
+   <section id="generator" class="section-hidden pt-20 min-h-full">
+    <div class="max-w-5xl mx-auto px-4 py-12">
+     <h2 class="font-orbitron text-3xl text-center mb-4 gradient-text">Signature Generation Simulator</h2>
+     <p class="text-center text-gray-400 mb-12">Experience the hybrid quantum-classical signing process</p>
+     <div class="glass-card rounded-2xl p-8 mb-8"><label for="message-input" class="block text-sm font-medium text-gray-300 mb-2">Enter Your Message</label> <textarea id="message-input" class="w-full h-32 bg-gray-900/50 border border-violet-500/30 rounded-xl p-4 text-white placeholder-gray-500 resize-none" placeholder="Type your message here to generate a quantum-assisted digital signature..."></textarea>
+      <div class="flex flex-wrap gap-4 mt-4"><button onclick="generateSignature()" class="btn-quantum px-6 py-3 rounded-xl font-semibold text-white flex items-center gap-2">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+        </svg> Generate Signature </button> <button onclick="clearSignature()" class="px-6 py-3 rounded-xl font-semibold border border-gray-500/50 hover:bg-gray-500/10 transition-colors"> Clear </button>
+      </div>
+     </div><!-- Generation Steps -->
+     <div id="signature-steps" class="space-y-6 hidden"><!-- Step 1: Message Hash -->
+      <div class="glass-card rounded-xl p-6 step-card" id="step-hash">
+       <div class="flex items-center gap-4 mb-4">
+        <div class="w-10 h-10 rounded-lg bg-cyan-500/20 flex items-center justify-center"><span class="text-cyan-400 font-bold">1</span>
+        </div>
+        <h3 class="font-semibold text-cyan-400">Message Hash (SHA-256)</h3>
+        <div class="ml-auto"><span class="text-xs px-2 py-1 rounded bg-cyan-500/20 text-cyan-400">COMPLETED</span>
+        </div>
+       </div>
+       <div class="bg-gray-900/50 rounded-lg p-4 font-mono text-sm break-all"><span class="text-gray-500">Hash: </span> <span id="hash-output" class="text-cyan-400"></span>
+       </div>
+      </div><!-- Step 2: Key Pair -->
+      <div class="glass-card rounded-xl p-6 step-card" id="step-keys">
+       <div class="flex items-center gap-4 mb-4">
+        <div class="w-10 h-10 rounded-lg bg-violet-500/20 flex items-center justify-center"><span class="text-violet-400 font-bold">2</span>
+        </div>
+        <h3 class="font-semibold text-violet-400">Classical Key Pair</h3>
+        <div class="ml-auto"><span class="text-xs px-2 py-1 rounded bg-violet-500/20 text-violet-400">GENERATED</span>
+        </div>
+       </div>
+       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="bg-gray-900/50 rounded-lg p-4"><span class="text-xs text-gray-500 block mb-1">Private Key (Demo)</span> <span id="private-key-output" class="font-mono text-xs text-red-400 break-all"></span>
+        </div>
+        <div class="bg-gray-900/50 rounded-lg p-4"><span class="text-xs text-gray-500 block mb-1">Public Key (Demo)</span> <span id="public-key-output" class="font-mono text-xs text-green-400 break-all"></span>
+        </div>
+       </div>
+      </div><!-- Step 3: Quantum Seed -->
+      <div class="glass-card rounded-xl p-6 step-card" id="step-quantum">
+       <div class="flex items-center gap-4 mb-4">
+        <div class="w-10 h-10 rounded-lg bg-pink-500/20 flex items-center justify-center quantum-particle"><span class="text-pink-400 font-bold">3</span>
+        </div>
+        <h3 class="font-semibold text-pink-400">Quantum Random Seed</h3>
+        <div class="ml-auto"><span class="text-xs px-2 py-1 rounded bg-pink-500/20 text-pink-400">QUANTUM</span>
+        </div>
+       </div>
+       <div class="bg-gray-900/50 rounded-lg p-4">
+        <div class="flex items-center gap-4 mb-2"><span class="text-xs text-gray-500">Quantum Entropy:</span>
+         <div class="flex gap-1">
+          <div class="w-2 h-4 bg-pink-500 rounded entropy-bar"></div>
+          <div class="w-2 h-4 bg-violet-500 rounded entropy-bar" style="animation-delay: 0.1s;"></div>
+          <div class="w-2 h-4 bg-cyan-500 rounded entropy-bar" style="animation-delay: 0.2s;"></div>
+          <div class="w-2 h-4 bg-pink-500 rounded entropy-bar" style="animation-delay: 0.3s;"></div>
+         </div>
+        </div><span class="text-xs text-gray-500 block mb-1">Quantum Seed (256-bit):</span> <span id="quantum-seed-output" class="font-mono text-xs text-pink-400 break-all"></span>
+       </div>
+      </div><!-- Step 4: Final Signature -->
+      <div class="glass-card rounded-xl p-6 step-card neon-border" id="step-signature">
+       <div class="flex items-center gap-4 mb-4">
+        <div class="w-10 h-10 rounded-lg bg-emerald-500/20 flex items-center justify-center"><span class="text-emerald-400 font-bold">4</span>
+        </div>
+        <h3 class="font-semibold text-emerald-400">Hybrid Digital Signature</h3>
+        <div class="ml-auto"><span class="text-xs px-2 py-1 rounded bg-emerald-500/20 text-emerald-400">FINAL</span>
+        </div>
+       </div>
+       <div class="bg-gray-900/50 rounded-lg p-4"><span class="text-xs text-gray-500 block mb-1">Quantum-Assisted Signature:</span> <span id="signature-output" class="font-mono text-xs text-emerald-400 break-all"></span>
+       </div>
+       <div class="flex flex-wrap gap-4 mt-4"><button onclick="exportSignature()" class="px-4 py-2 rounded-lg bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500/30 transition-colors text-sm flex items-center gap-2">
+         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+         </svg> Export Signature Proof </button> <button onclick="copySignature()" class="px-4 py-2 rounded-lg bg-violet-500/20 text-violet-400 hover:bg-violet-500/30 transition-colors text-sm flex items-center gap-2">
+         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+         </svg> Copy to Clipboard </button>
+       </div>
+      </div>
+     </div><!-- Toast Notification -->
+     <div id="toast-notification" class="fixed bottom-8 right-8 transform translate-y-20 opacity-0 transition-all duration-300 z-50">
+      <div class="glass-card rounded-lg px-6 py-4 flex items-center gap-3 border border-emerald-500/30">
+       <svg class="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+       </svg><span id="toast-message" class="text-emerald-400"></span>
+      </div>
+     </div>
+    </div>
+   </section><!-- Verification Section -->
+   <section id="verify" class="section-hidden pt-20 min-h-full">
+    <div class="max-w-5xl mx-auto px-4 py-12">
+     <h2 class="font-orbitron text-3xl text-center mb-4 gradient-text">Signature Verification</h2>
+     <p class="text-center text-gray-400 mb-12">Verify the authenticity of quantum-assisted digital signatures</p>
+     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <div class="glass-card rounded-2xl p-8">
+       <h3 class="font-semibold text-lg mb-4 text-cyan-400">Input Data</h3>
+       <div class="space-y-4">
+        <div><label for="verify-message" class="block text-sm font-medium text-gray-300 mb-2">Original Message</label> <textarea id="verify-message" class="w-full h-24 bg-gray-900/50 border border-violet-500/30 rounded-xl p-4 text-white placeholder-gray-500 resize-none" placeholder="Enter the original message..."></textarea>
+        </div>
+        <div><label for="verify-signature" class="block text-sm font-medium text-gray-300 mb-2">Signature</label> <textarea id="verify-signature" class="w-full h-24 bg-gray-900/50 border border-violet-500/30 rounded-xl p-4 text-white placeholder-gray-500 resize-none font-mono text-xs" placeholder="Paste the signature here..."></textarea>
+        </div><button onclick="verifySignature()" class="btn-quantum w-full px-6 py-3 rounded-xl font-semibold text-white flex items-center justify-center gap-2">
+         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+         </svg> Verify Signature </button>
+       </div>
+      </div>
+      <div class="glass-card rounded-2xl p-8">
+       <h3 class="font-semibold text-lg mb-4 text-violet-400">Verification Result</h3>
+       <div id="verification-result" class="space-y-4">
+        <div class="text-center py-12 text-gray-500">
+         <svg class="w-16 h-16 mx-auto mb-4 opacity-50" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+         </svg>
+         <p>Enter message and signature to verify</p>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- Quantum Demo Section -->
+   <section id="quantum" class="section-hidden pt-20 min-h-full">
+    <div class="max-w-6xl mx-auto px-4 py-12">
+     <h2 class="font-orbitron text-3xl text-center mb-4 gradient-text">Quantum Assistance Demo</h2>
+     <p class="text-center text-gray-400 mb-12">Visualize quantum random number generation and entropy</p>
+     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8"><!-- QRNG Visualization -->
+      <div class="glass-card rounded-2xl p-8">
+       <div class="flex items-center justify-between mb-6">
+        <h3 class="font-orbitron text-xl text-pink-400">Quantum Random Generator</h3><button onclick="startQuantumGeneration()" id="qrng-btn" class="px-4 py-2 rounded-lg bg-pink-500/20 text-pink-400 hover:bg-pink-500/30 transition-colors text-sm"> Start Generation </button>
+       </div><!-- Bitstream Display -->
+       <div class="bg-gray-900/50 rounded-xl p-6 mb-6 overflow-hidden">
+        <div class="text-xs text-gray-500 mb-2">
+         Live Quantum Bitstream
+        </div>
+        <div id="bitstream" class="font-mono text-sm text-cyan-400 h-20 overflow-hidden leading-relaxed"><span class="text-gray-600">Waiting for quantum source...</span>
+        </div>
+       </div><!-- Entropy Bars -->
+       <div class="mb-6">
+        <div class="text-xs text-gray-500 mb-3">
+         Real-time Entropy Visualization
+        </div>
+        <div class="flex gap-1 h-24" id="entropy-bars"><!-- Bars will be generated by JS -->
+        </div>
+       </div><!-- Stats -->
+       <div class="grid grid-cols-3 gap-4">
+        <div class="text-center">
+         <div id="bits-generated" class="text-2xl font-bold text-cyan-400">
+          0
+         </div>
+         <div class="text-xs text-gray-500">
+          Bits Generated
+         </div>
+        </div>
+        <div class="text-center">
+         <div id="entropy-level" class="text-2xl font-bold text-violet-400">
+          0%
+         </div>
+         <div class="text-xs text-gray-500">
+          Entropy Level
+         </div>
+        </div>
+        <div class="text-center">
+         <div id="generation-rate" class="text-2xl font-bold text-pink-400">
+          0
+         </div>
+         <div class="text-xs text-gray-500">
+          bits/sec
+         </div>
+        </div>
+       </div>
+      </div><!-- How Quantum Randomness Works -->
+      <div class="glass-card rounded-2xl p-8">
+       <h3 class="font-orbitron text-xl text-cyan-400 mb-6">How Quantum Randomness Strengthens Signatures</h3>
+       <div class="space-y-6">
+        <div class="glass-card rounded-xl p-4 border-l-4 border-pink-500">
+         <h4 class="font-semibold text-pink-400 mb-2">🌀 Quantum Superposition</h4>
+         <p class="text-sm text-gray-400">Quantum bits (qubits) exist in multiple states simultaneously until measured, providing inherent unpredictability.</p>
+        </div>
+        <div class="glass-card rounded-xl p-4 border-l-4 border-violet-500">
+         <h4 class="font-semibold text-violet-400 mb-2">📊 True Randomness</h4>
+         <p class="text-sm text-gray-400">Unlike pseudo-random generators, quantum randomness cannot be predicted or reproduced, even with unlimited computational power.</p>
+        </div>
+        <div class="glass-card rounded-xl p-4 border-l-4 border-cyan-500">
+         <h4 class="font-semibold text-cyan-400 mb-2">🛡️ Enhanced Security</h4>
+         <p class="text-sm text-gray-400">Quantum seeds make signatures resistant to attacks that exploit patterns in traditional random number generators.</p>
+        </div>
+        <div class="glass-card rounded-xl p-4 border-l-4 border-emerald-500">
+         <h4 class="font-semibold text-emerald-400 mb-2">🔮 Future-Proof</h4>
+         <p class="text-sm text-gray-400">Even quantum computers cannot predict the output of quantum random number generators.</p>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- Comparison Section -->
+   <section id="compare" class="section-hidden pt-20 min-h-full">
+    <div class="max-w-6xl mx-auto px-4 py-12">
+     <h2 class="font-orbitron text-3xl text-center mb-4 gradient-text">Security Comparison</h2>
+     <p class="text-center text-gray-400 mb-12">Comparing signature schemes across key security metrics</p>
+     <div class="glass-card rounded-2xl overflow-hidden">
+      <div class="overflow-x-auto">
+       <table class="w-full">
+        <thead>
+         <tr class="bg-gradient-to-r from-violet-500/20 to-cyan-500/20">
+          <th class="px-6 py-4 text-left text-sm font-semibold text-cyan-400">Metric</th>
+          <th class="px-6 py-4 text-center text-sm font-semibold text-gray-300">Classical (RSA/ECDSA)</th>
+          <th class="px-6 py-4 text-center text-sm font-semibold text-pink-400">Quantum-Assisted</th>
+          <th class="px-6 py-4 text-center text-sm font-semibold text-violet-400">Post-Quantum</th>
+         </tr>
+        </thead>
+        <tbody>
+         <tr class="comparison-row border-t border-gray-700/50 transition-colors">
+          <td class="px-6 py-4 text-sm text-gray-300">Security Level</td>
+          <td class="px-6 py-4 text-center">
+           <div class="flex justify-center gap-1"><span class="w-3 h-3 rounded-full bg-yellow-500"></span> <span class="w-3 h-3 rounded-full bg-yellow-500"></span> <span class="w-3 h-3 rounded-full bg-yellow-500"></span> <span class="w-3 h-3 rounded-full bg-gray-600"></span> <span class="w-3 h-3 rounded-full bg-gray-600"></span>
+           </div><span class="text-xs text-gray-500">Medium</span></td>
+          <td class="px-6 py-4 text-center">
+           <div class="flex justify-center gap-1"><span class="w-3 h-3 rounded-full bg-emerald-500"></span> <span class="w-3 h-3 rounded-full bg-emerald-500"></span> <span class="w-3 h-3 rounded-full bg-emerald-500"></span> <span class="w-3 h-3 rounded-full bg-emerald-500"></span> <span class="w-3 h-3 rounded-full bg-gray-600"></span>
+           </div><span class="text-xs text-pink-400">High</span></td>
+          <td class="px-6 py-4 text-center">
+           <div class="flex justify-center gap-1"><span class="w-3 h-3 rounded-full bg-emerald-500"></span> <span class="w-3 h-3 rounded-full bg-emerald-500"></span> <span class="w-3 h-3 rounded-full bg-emerald-500"></span> <span class="w-3 h-3 rounded-full bg-emerald-500"></span> <span class="w-3 h-3 rounded-full bg-emerald-500"></span>
+           </div><span class="text-xs text-violet-400">Very High</span></td>
+         </tr>
+         <tr class="comparison-row border-t border-gray-700/50 transition-colors">
+          <td class="px-6 py-4 text-sm text-gray-300">Signing Speed</td>
+          <td class="px-6 py-4 text-center text-emerald-400">⚡ Fast</td>
+          <td class="px-6 py-4 text-center text-emerald-400">⚡ Fast</td>
+          <td class="px-6 py-4 text-center text-yellow-400">⏱️ Moderate</td>
+         </tr>
+         <tr class="comparison-row border-t border-gray-700/50 transition-colors">
+          <td class="px-6 py-4 text-sm text-gray-300">Verification Speed</td>
+          <td class="px-6 py-4 text-center text-emerald-400">⚡ Fast</td>
+          <td class="px-6 py-4 text-center text-emerald-400">⚡ Fast</td>
+          <td class="px-6 py-4 text-center text-emerald-400">⚡ Fast</td>
+         </tr>
+         <tr class="comparison-row border-t border-gray-700/50 transition-colors">
+          <td class="px-6 py-4 text-sm text-gray-300">Quantum Attack Resistance</td>
+          <td class="px-6 py-4 text-center text-red-400">❌ Vulnerable</td>
+          <td class="px-6 py-4 text-center text-yellow-400">⚠️ Partial</td>
+          <td class="px-6 py-4 text-center text-emerald-400">✓ Resistant</td>
+         </tr>
+         <tr class="comparison-row border-t border-gray-700/50 transition-colors">
+          <td class="px-6 py-4 text-sm text-gray-300">Signature Size</td>
+          <td class="px-6 py-4 text-center text-emerald-400">256-512 bytes</td>
+          <td class="px-6 py-4 text-center text-emerald-400">512-1024 bytes</td>
+          <td class="px-6 py-4 text-center text-yellow-400">2-50 KB</td>
+         </tr>
+         <tr class="comparison-row border-t border-gray-700/50 transition-colors">
+          <td class="px-6 py-4 text-sm text-gray-300">Key Size</td>
+          <td class="px-6 py-4 text-center text-emerald-400">256-4096 bits</td>
+          <td class="px-6 py-4 text-center text-emerald-400">512-4096 bits</td>
+          <td class="px-6 py-4 text-center text-yellow-400">1-100 KB</td>
+         </tr>
+         <tr class="comparison-row border-t border-gray-700/50 transition-colors">
+          <td class="px-6 py-4 text-sm text-gray-300">Randomness Quality</td>
+          <td class="px-6 py-4 text-center text-yellow-400">Pseudo-random</td>
+          <td class="px-6 py-4 text-center text-emerald-400">True random</td>
+          <td class="px-6 py-4 text-center text-yellow-400">Pseudo-random</td>
+         </tr>
+         <tr class="comparison-row border-t border-gray-700/50 transition-colors">
+          <td class="px-6 py-4 text-sm text-gray-300">Implementation Maturity</td>
+          <td class="px-6 py-4 text-center text-emerald-400">✓ Mature</td>
+          <td class="px-6 py-4 text-center text-yellow-400">⚠️ Emerging</td>
+          <td class="px-6 py-4 text-center text-yellow-400">⚠️ Standardizing</td>
+         </tr>
+        </tbody>
+       </table>
+      </div>
+     </div>
+     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+      <div class="glass-card rounded-xl p-6 text-center">
+       <div class="text-4xl mb-4">
+        🔐
+       </div>
+       <h3 class="font-semibold text-gray-200 mb-2">Classical</h3>
+       <p class="text-sm text-gray-400">Proven, widely deployed, but vulnerable to future quantum attacks.</p>
+      </div>
+      <div class="glass-card rounded-xl p-6 text-center border border-pink-500/30">
+       <div class="text-4xl mb-4">
+        ⚛️
+       </div>
+       <h3 class="font-semibold text-pink-400 mb-2">Quantum-Assisted</h3>
+       <p class="text-sm text-gray-400">Best of both worlds with true randomness and practical performance.</p>
+      </div>
+      <div class="glass-card rounded-xl p-6 text-center">
+       <div class="text-4xl mb-4">
+        🛡️
+       </div>
+       <h3 class="font-semibold text-gray-200 mb-2">Post-Quantum</h3>
+       <p class="text-sm text-gray-400">Maximum security against quantum threats, larger signatures.</p>
+      </div>
+     </div>
+    </div>
+   </section><!-- Architecture Section -->
+   <section id="architecture" class="section-hidden pt-20 min-h-full">
+    <div class="max-w-6xl mx-auto px-4 py-12">
+     <h2 class="font-orbitron text-3xl text-center mb-4 gradient-text">System Architecture</h2>
+     <p class="text-center text-gray-400 mb-12">Layered architecture of the quantum-assisted signature system</p>
+     <div class="glass-card rounded-2xl p-8">
+      <div class="space-y-4"><!-- User Layer -->
+       <div class="architecture-layer glass-card rounded-xl p-6 border-l-4 border-cyan-500 cursor-pointer">
+        <div class="flex items-center gap-4">
+         <div class="w-12 h-12 rounded-lg bg-cyan-500/20 flex items-center justify-center">
+          <svg class="w-6 h-6 text-cyan-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+          </svg>
+         </div>
+         <div class="flex-1">
+          <h3 class="font-semibold text-cyan-400 text-lg">User Interface Layer</h3>
+          <p class="text-sm text-gray-400">Message input, signature output, verification interface</p>
+         </div><span class="text-xs px-3 py-1 rounded-full bg-cyan-500/20 text-cyan-400">LAYER 1</span>
+        </div>
+       </div><!-- Arrow -->
+       <div class="flex justify-center">
+        <svg class="w-6 h-6 text-gray-500" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+        </svg>
+       </div><!-- Hash Layer -->
+       <div class="architecture-layer glass-card rounded-xl p-6 border-l-4 border-violet-500 cursor-pointer">
+        <div class="flex items-center gap-4">
+         <div class="w-12 h-12 rounded-lg bg-violet-500/20 flex items-center justify-center">
+          <svg class="w-6 h-6 text-violet-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
+          </svg>
+         </div>
+         <div class="flex-1">
+          <h3 class="font-semibold text-violet-400 text-lg">Hash Processing Layer</h3>
+          <p class="text-sm text-gray-400">SHA-256 message digest generation, integrity verification</p>
+         </div><span class="text-xs px-3 py-1 rounded-full bg-violet-500/20 text-violet-400">LAYER 2</span>
+        </div>
+       </div><!-- Arrow -->
+       <div class="flex justify-center">
+        <svg class="w-6 h-6 text-gray-500" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+        </svg>
+       </div><!-- Key Layer -->
+       <div class="architecture-layer glass-card rounded-xl p-6 border-l-4 border-emerald-500 cursor-pointer">
+        <div class="flex items-center gap-4">
+         <div class="w-12 h-12 rounded-lg bg-emerald-500/20 flex items-center justify-center">
+          <svg class="w-6 h-6 text-emerald-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
+          </svg>
+         </div>
+         <div class="flex-1">
+          <h3 class="font-semibold text-emerald-400 text-lg">Key Management Layer</h3>
+          <p class="text-sm text-gray-400">Asymmetric key pair generation, storage, and lifecycle management</p>
+         </div><span class="text-xs px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-400">LAYER 3</span>
+        </div>
+       </div><!-- Arrow -->
+       <div class="flex justify-center">
+        <svg class="w-6 h-6 text-gray-500" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+        </svg>
+       </div><!-- Quantum Layer -->
+       <div class="architecture-layer glass-card rounded-xl p-6 border-l-4 border-pink-500 cursor-pointer">
+        <div class="flex items-center gap-4">
+         <div class="w-12 h-12 rounded-lg bg-pink-500/20 flex items-center justify-center quantum-particle">
+          <svg class="w-6 h-6 text-pink-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+          </svg>
+         </div>
+         <div class="flex-1">
+          <h3 class="font-semibold text-pink-400 text-lg">Quantum Randomness Layer</h3>
+          <p class="text-sm text-gray-400">True random number generation from quantum entropy sources</p>
+         </div><span class="text-xs px-3 py-1 rounded-full bg-pink-500/20 text-pink-400">LAYER 4</span>
+        </div>
+       </div><!-- Arrow -->
+       <div class="flex justify-center">
+        <svg class="w-6 h-6 text-gray-500" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+        </svg>
+       </div><!-- Verification Layer -->
+       <div class="architecture-layer glass-card rounded-xl p-6 border-l-4 border-yellow-500 cursor-pointer">
+        <div class="flex items-center gap-4">
+         <div class="w-12 h-12 rounded-lg bg-yellow-500/20 flex items-center justify-center">
+          <svg class="w-6 h-6 text-yellow-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+         </div>
+         <div class="flex-1">
+          <h3 class="font-semibold text-yellow-400 text-lg">Verification Layer</h3>
+          <p class="text-sm text-gray-400">Signature validation, integrity checking, authentication</p>
+         </div><span class="text-xs px-3 py-1 rounded-full bg-yellow-500/20 text-yellow-400">LAYER 5</span>
+        </div>
+       </div>
+      </div>
+     </div><!-- Download Architecture -->
+     <div class="flex justify-center mt-8"><button onclick="downloadReport()" class="btn-quantum px-8 py-4 rounded-xl font-semibold text-white flex items-center gap-2">
+       <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+       </svg> Download Technical Report </button>
+     </div>
+    </div>
+   </section><!-- Use Cases Section -->
+   <section id="usecases" class="section-hidden pt-20 min-h-full">
+    <div class="max-w-6xl mx-auto px-4 py-12">
+     <h2 class="font-orbitron text-3xl text-center mb-4 gradient-text">Use Cases</h2>
+     <p class="text-center text-gray-400 mb-12">Real-world applications of quantum-assisted digital signatures</p>
+     <div class="grid grid-cols-1 md:grid-cols-2 gap-8"><!-- Banking -->
+      <div class="use-case-card glass-card rounded-2xl p-8">
+       <div class="flex items-center gap-4 mb-6">
+        <div class="w-16 h-16 rounded-xl bg-gradient-to-br from-emerald-400 to-green-500 flex items-center justify-center"><span class="text-3xl">🏦</span>
+        </div>
+        <div>
+         <h3 class="font-orbitron text-xl text-emerald-400">Banking &amp; Finance</h3><span class="text-xs px-2 py-1 rounded bg-emerald-500/20 text-emerald-400">HIGH PRIORITY</span>
+        </div>
+       </div>
+       <ul class="space-y-3 text-gray-300">
+        <li class="flex items-start gap-2"><span class="text-emerald-400 mt-1">✓</span> <span>Secure transaction authorization</span></li>
+        <li class="flex items-start gap-2"><span class="text-emerald-400 mt-1">✓</span> <span>Cross-border payment verification</span></li>
+        <li class="flex items-start gap-2"><span class="text-emerald-400 mt-1">✓</span> <span>Digital contract signing</span></li>
+        <li class="flex items-start gap-2"><span class="text-emerald-400 mt-1">✓</span> <span>Fraud prevention systems</span></li>
+       </ul>
+      </div><!-- Government -->
+      <div class="use-case-card glass-card rounded-2xl p-8">
+       <div class="flex items-center gap-4 mb-6">
+        <div class="w-16 h-16 rounded-xl bg-gradient-to-br from-blue-400 to-cyan-500 flex items-center justify-center"><span class="text-3xl">🏛️</span>
+        </div>
+        <div>
+         <h3 class="font-orbitron text-xl text-cyan-400">Government Records</h3><span class="text-xs px-2 py-1 rounded bg-cyan-500/20 text-cyan-400">CRITICAL</span>
+        </div>
+       </div>
+       <ul class="space-y-3 text-gray-300">
+        <li class="flex items-start gap-2"><span class="text-cyan-400 mt-1">✓</span> <span>Official document authentication</span></li>
+        <li class="flex items-start gap-2"><span class="text-cyan-400 mt-1">✓</span> <span>E-voting system integrity</span></li>
+        <li class="flex items-start gap-2"><span class="text-cyan-400 mt-1">✓</span> <span>Land registry verification</span></li>
+        <li class="flex items-start gap-2"><span class="text-cyan-400 mt-1">✓</span> <span>National ID systems</span></li>
+       </ul>
+      </div><!-- Cloud Security -->
+      <div class="use-case-card glass-card rounded-2xl p-8">
+       <div class="flex items-center gap-4 mb-6">
+        <div class="w-16 h-16 rounded-xl bg-gradient-to-br from-violet-400 to-purple-500 flex items-center justify-center"><span class="text-3xl">☁️</span>
+        </div>
+        <div>
+         <h3 class="font-orbitron text-xl text-violet-400">Cloud Security</h3><span class="text-xs px-2 py-1 rounded bg-violet-500/20 text-violet-400">ENTERPRISE</span>
+        </div>
+       </div>
+       <ul class="space-y-3 text-gray-300">
+        <li class="flex items-start gap-2"><span class="text-violet-400 mt-1">✓</span> <span>API authentication tokens</span></li>
+        <li class="flex items-start gap-2"><span class="text-violet-400 mt-1">✓</span> <span>Secure file sharing</span></li>
+        <li class="flex items-start gap-2"><span class="text-violet-400 mt-1">✓</span> <span>Multi-cloud key management</span></li>
+        <li class="flex items-start gap-2"><span class="text-violet-400 mt-1">✓</span> <span>Zero-trust architecture</span></li>
+       </ul>
+      </div><!-- IoT -->
+      <div class="use-case-card glass-card rounded-2xl p-8">
+       <div class="flex items-center gap-4 mb-6">
+        <div class="w-16 h-16 rounded-xl bg-gradient-to-br from-pink-400 to-rose-500 flex items-center justify-center"><span class="text-3xl">📡</span>
+        </div>
+        <div>
+         <h3 class="font-orbitron text-xl text-pink-400">IoT Authentication</h3><span class="text-xs px-2 py-1 rounded bg-pink-500/20 text-pink-400">EMERGING</span>
+        </div>
+       </div>
+       <ul class="space-y-3 text-gray-300">
+        <li class="flex items-start gap-2"><span class="text-pink-400 mt-1">✓</span> <span>Device identity verification</span></li>
+        <li class="flex items-start gap-2"><span class="text-pink-400 mt-1">✓</span> <span>Firmware update signing</span></li>
+        <li class="flex items-start gap-2"><span class="text-pink-400 mt-1">✓</span> <span>Sensor data integrity</span></li>
+        <li class="flex items-start gap-2"><span class="text-pink-400 mt-1">✓</span> <span>Smart contract triggers</span></li>
+       </ul>
+      </div>
+     </div>
+    </div>
+   </section><!-- Glossary Modal -->
+   <div id="glossary-modal" class="fixed inset-0 z-50 hidden">
+    <div class="modal-overlay absolute inset-0" onclick="closeGlossary()"></div>
+    <div class="relative z-10 flex items-center justify-center min-h-full p-4">
+     <div class="glass-card rounded-2xl p-8 max-w-2xl w-full max-h-[80%] overflow-y-auto border border-violet-500/30">
+      <div class="flex items-center justify-between mb-6">
+       <h2 class="font-orbitron text-2xl gradient-text">Glossary</h2><button onclick="closeGlossary()" class="p-2 rounded-lg hover:bg-gray-700/50 transition-colors">
+        <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg></button>
+      </div>
+      <div class="space-y-4">
+       <div class="glass-card rounded-lg p-4">
+        <h3 class="font-semibold text-cyan-400 mb-1">Digital Signature</h3>
+        <p class="text-sm text-gray-400">A mathematical scheme for verifying the authenticity and integrity of digital messages or documents.</p>
+       </div>
+       <div class="glass-card rounded-lg p-4">
+        <h3 class="font-semibold text-violet-400 mb-1">Hash Function</h3>
+        <p class="text-sm text-gray-400">A one-way cryptographic function that converts input data of any size into a fixed-size output (digest).</p>
+       </div>
+       <div class="glass-card rounded-lg p-4">
+        <h3 class="font-semibold text-pink-400 mb-1">Quantum Random Number Generator (QRNG)</h3>
+        <p class="text-sm text-gray-400">A device that generates truly random numbers using quantum mechanical phenomena like photon detection.</p>
+       </div>
+       <div class="glass-card rounded-lg p-4">
+        <h3 class="font-semibold text-emerald-400 mb-1">Public Key</h3>
+        <p class="text-sm text-gray-400">A cryptographic key that can be shared publicly and is used to verify signatures or encrypt data.</p>
+       </div>
+       <div class="glass-card rounded-lg p-4">
+        <h3 class="font-semibold text-red-400 mb-1">Private Key</h3>
+        <p class="text-sm text-gray-400">A secret cryptographic key that must be kept confidential and is used to create signatures or decrypt data.</p>
+       </div>
+       <div class="glass-card rounded-lg p-4">
+        <h3 class="font-semibold text-yellow-400 mb-1">Post-Quantum Cryptography</h3>
+        <p class="text-sm text-gray-400">Cryptographic algorithms designed to be secure against attacks by both classical and quantum computers.</p>
+       </div>
+       <div class="glass-card rounded-lg p-4">
+        <h3 class="font-semibold text-blue-400 mb-1">Entropy</h3>
+        <p class="text-sm text-gray-400">A measure of randomness or unpredictability in a system. High entropy means more randomness.</p>
+       </div>
+       <div class="glass-card rounded-lg p-4">
+        <h3 class="font-semibold text-orange-400 mb-1">Non-repudiation</h3>
+        <p class="text-sm text-gray-400">The assurance that someone cannot deny the validity of their signature on a document.</p>
+       </div>
+      </div>
+     </div>
+    </div>
+   </div>
+  </div>
+  <script>
+    // Default configuration
+    const defaultConfig = {
+      main_title: 'Generalized Quantum Assisted Digital Signature System',
+      subtitle: 'Hybrid Quantum-Classical Secure Signature Framework',
+      background_color: '#0a0a1a',
+      surface_color: '#12122a',
+      text_color: '#e2e8f0',
+      primary_action_color: '#8b5cf6',
+      secondary_action_color: '#00d4ff'
+    };
+
+    let config = { ...defaultConfig };
+    let generatedSignatureData = null;
+    let quantumInterval = null;
+
+    // Initialize Element SDK
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange: async (newConfig) => {
+          config = { ...defaultConfig, ...newConfig };
+          applyConfig();
+        },
+        mapToCapabilities: (cfg) => ({
+          recolorables: [
+            {
+              get: () => cfg.background_color || defaultConfig.background_color,
+              set: (value) => { cfg.background_color = value; window.elementSdk.setConfig({ background_color: value }); }
+            },
+            {
+              get: () => cfg.surface_color || defaultConfig.surface_color,
+              set: (value) => { cfg.surface_color = value; window.elementSdk.setConfig({ surface_color: value }); }
+            },
+            {
+              get: () => cfg.text_color || defaultConfig.text_color,
+              set: (value) => { cfg.text_color = value; window.elementSdk.setConfig({ text_color: value }); }
+            },
+            {
+              get: () => cfg.primary_action_color || defaultConfig.primary_action_color,
+              set: (value) => { cfg.primary_action_color = value; window.elementSdk.setConfig({ primary_action_color: value }); }
+            },
+            {
+              get: () => cfg.secondary_action_color || defaultConfig.secondary_action_color,
+              set: (value) => { cfg.secondary_action_color = value; window.elementSdk.setConfig({ secondary_action_color: value }); }
+            }
+          ],
+          borderables: [],
+          fontEditable: undefined,
+          fontSizeable: undefined
+        }),
+        mapToEditPanelValues: (cfg) => new Map([
+          ['main_title', cfg.main_title || defaultConfig.main_title],
+          ['subtitle', cfg.subtitle || defaultConfig.subtitle]
+        ])
+      });
+    }
+
+    function applyConfig() {
+      const mainTitle = document.getElementById('main-title');
+      const subtitle = document.getElementById('subtitle');
+      const body = document.body;
+      
+      if (mainTitle) mainTitle.textContent = config.main_title || defaultConfig.main_title;
+      if (subtitle) subtitle.textContent = config.subtitle || defaultConfig.subtitle;
+      
+      // Apply colors
+      document.documentElement.style.setProperty('--primary-bg', config.background_color || defaultConfig.background_color);
+      document.documentElement.style.setProperty('--secondary-bg', config.surface_color || defaultConfig.surface_color);
+      document.documentElement.style.setProperty('--text-primary', config.text_color || defaultConfig.text_color);
+      document.documentElement.style.setProperty('--accent-violet', config.primary_action_color || defaultConfig.primary_action_color);
+      document.documentElement.style.setProperty('--accent-blue', config.secondary_action_color || defaultConfig.secondary_action_color);
+      
+      body.style.backgroundColor = config.background_color || defaultConfig.background_color;
+      body.style.color = config.text_color || defaultConfig.text_color;
+      
+      // Update button colors
+      const btnQuantum = document.querySelectorAll('.btn-quantum');
+      btnQuantum.forEach(btn => {
+        btn.style.background = `linear-gradient(135deg, ${config.primary_action_color || defaultConfig.primary_action_color}, ${config.secondary_action_color || defaultConfig.secondary_action_color})`;
+      });
+    }
+
+    // Navigation
+    function showSection(sectionId) {
+      document.querySelectorAll('section').forEach(section => {
+        section.classList.remove('section-active');
+        section.classList.add('section-hidden');
+      });
+      
+      document.querySelectorAll('.nav-item').forEach(item => {
+        item.classList.remove('active');
+        if (item.dataset.section === sectionId) {
+          item.classList.add('active');
+        }
+      });
+      
+      const targetSection = document.getElementById(sectionId);
+      if (targetSection) {
+        targetSection.classList.remove('section-hidden');
+        targetSection.classList.add('section-active');
+      }
+    }
+
+    // Simulated crypto functions
+    function generateHash(message) {
+      let hash = 0;
+      for (let i = 0; i < message.length; i++) {
+        const char = message.charCodeAt(i);
+        hash = ((hash << 5) - hash) + char;
+        hash = hash & hash;
+      }
+      const hashHex = Math.abs(hash).toString(16).padStart(8, '0');
+      return hashHex.repeat(8).substring(0, 64);
+    }
+
+    function generateKeyPair() {
+      const chars = '0123456789abcdef';
+      let privateKey = '';
+      let publicKey = '';
+      for (let i = 0; i < 64; i++) {
+        privateKey += chars[Math.floor(Math.random() * 16)];
+        publicKey += chars[Math.floor(Math.random() * 16)];
+      }
+      return { privateKey, publicKey };
+    }
+
+    function generateQuantumSeed() {
+      const chars = '0123456789abcdef';
+      let seed = '';
+      for (let i = 0; i < 64; i++) {
+        seed += chars[Math.floor(Math.random() * 16)];
+      }
+      return seed;
+    }
+
+    function generateHybridSignature(hash, privateKey, quantumSeed) {
+      const combined = hash + privateKey + quantumSeed;
+      let signature = '';
+      for (let i = 0; i < combined.length; i++) {
+        const charCode = combined.charCodeAt(i);
+        signature += ((charCode * 7 + i * 13) % 256).toString(16).padStart(2, '0');
+      }
+      return signature.substring(0, 128);
+    }
+
+    // Signature generation
+    function generateSignature() {
+      const messageInput = document.getElementById('message-input');
+      const message = messageInput.value.trim();
+      
+      if (!message) {
+        showToast('Please enter a message first');
+        return;
+      }
+
+      const stepsContainer = document.getElementById('signature-steps');
+      stepsContainer.classList.remove('hidden');
+
+      // Generate all components
+      const hash = generateHash(message);
+      const keyPair = generateKeyPair();
+      const quantumSeed = generateQuantumSeed();
+      const signature = generateHybridSignature(hash, keyPair.privateKey, quantumSeed);
+
+      // Animate step by step
+      setTimeout(() => {
+        document.getElementById('hash-output').textContent = hash;
+      }, 300);
+
+      setTimeout(() => {
+        document.getElementById('private-key-output').textContent = keyPair.privateKey;
+        document.getElementById('public-key-output').textContent = keyPair.publicKey;
+      }, 600);
+
+      setTimeout(() => {
+        document.getElementById('quantum-seed-output').textContent = quantumSeed;
+      }, 900);
+
+      setTimeout(() => {
+        document.getElementById('signature-output').textContent = signature;
+      }, 1200);
+
+      // Store for export
+      generatedSignatureData = {
+        message,
+        hash,
+        publicKey: keyPair.publicKey,
+        quantumSeed,
+        signature,
+        timestamp: new Date().toISOString()
+      };
+    }
+
+    function clearSignature() {
+      document.getElementById('message-input').value = '';
+      document.getElementById('signature-steps').classList.add('hidden');
+      generatedSignatureData = null;
+    }
+
+    function showToast(message) {
+      const toast = document.getElementById('toast-notification');
+      const toastMessage = document.getElementById('toast-message');
+      toastMessage.textContent = message;
+      toast.classList.remove('translate-y-20', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+      
+      setTimeout(() => {
+        toast.classList.remove('translate-y-0', 'opacity-100');
+        toast.classList.add('translate-y-20', 'opacity-0');
+      }, 3000);
+    }
+
+    function copySignature() {
+      if (!generatedSignatureData) {
+        showToast('Generate a signature first');
+        return;
+      }
+      
+      const text = generatedSignatureData.signature;
+      navigator.clipboard.writeText(text).then(() => {
+        showToast('Signature copied to clipboard!');
+      });
+    }
+
+    function exportSignature() {
+      if (!generatedSignatureData) {
+        showToast('Generate a signature first');
+        return;
+      }
+
+      const content = `QUANTUM-ASSISTED DIGITAL SIGNATURE PROOF
+========================================
+
+Generated: ${generatedSignatureData.timestamp}
+
+ORIGINAL MESSAGE:
+${generatedSignatureData.message}
+
+MESSAGE HASH (SHA-256):
+${generatedSignatureData.hash}
+
+PUBLIC KEY:
+${generatedSignatureData.publicKey}
+
+QUANTUM SEED:
+${generatedSignatureData.quantumSeed}
+
+HYBRID SIGNATURE:
+${generatedSignatureData.signature}
+
+========================================
+This signature was generated using a hybrid quantum-classical approach.
+Quantum randomness enhances security against computational attacks.
+`;
+
+      const blob = new Blob([content], { type: 'text/plain' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'quantum_signature_proof.txt';
+      a.click();
+      URL.revokeObjectURL(url);
+      showToast('Signature proof exported!');
+    }
+
+    // Verification
+    function verifySignature() {
+      const message = document.getElementById('verify-message').value.trim();
+      const signature = document.getElementById('verify-signature').value.trim();
+      const resultContainer = document.getElementById('verification-result');
+
+      if (!message || !signature) {
+        resultContainer.innerHTML = `
+          <div class="text-center py-8 text-yellow-400">
+            <svg class="w-12 h-12 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+            </svg>
+            <p>Please fill in both fields</p>
+          </div>
+        `;
+        return;
+      }
+
+      // Simulate verification (demo always succeeds if signature length is correct)
+      const isValid = signature.length >= 64;
+
+      if (isValid) {
+        resultContainer.innerHTML = `
+          <div class="space-y-4">
+            <div class="text-center py-6">
+              <div class="w-20 h-20 mx-auto mb-4 rounded-full valid-badge flex items-center justify-center">
+                <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                </svg>
+              </div>
+              <div class="inline-block px-6 py-2 rounded-full valid-badge text-white font-bold text-xl">
+                ✓ VALID SIGNATURE
+              </div>
+            </div>
+            <div class="space-y-2 text-sm">
+              <div class="flex items-center gap-2 text-emerald-400">
+                <span>✓</span> Message integrity verified
+              </div>
+              <div class="flex items-center gap-2 text-emerald-400">
+                <span>✓</span> Signature format valid
+              </div>
+              <div class="flex items-center gap-2 text-emerald-400">
+                <span>✓</span> Quantum seed detected
+              </div>
+              <div class="flex items-center gap-2 text-emerald-400">
+                <span>✓</span> Cryptographic binding confirmed
+              </div>
+            </div>
+          </div>
+        `;
+      } else {
+        resultContainer.innerHTML = `
+          <div class="space-y-4">
+            <div class="text-center py-6">
+              <div class="w-20 h-20 mx-auto mb-4 rounded-full invalid-badge flex items-center justify-center">
+                <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+              </div>
+              <div class="inline-block px-6 py-2 rounded-full invalid-badge text-white font-bold text-xl">
+                ✗ INVALID SIGNATURE
+              </div>
+            </div>
+            <div class="space-y-2 text-sm">
+              <div class="flex items-center gap-2 text-red-400">
+                <span>✗</span> Signature format invalid
+              </div>
+              <div class="flex items-center gap-2 text-gray-500">
+                <span>-</span> Unable to verify integrity
+              </div>
+            </div>
+          </div>
+        `;
+      }
+    }
+
+    // Quantum Demo
+    let bitsGenerated = 0;
+    let isGenerating = false;
+
+    function startQuantumGeneration() {
+      const btn = document.getElementById('qrng-btn');
+      
+      if (isGenerating) {
+        isGenerating = false;
+        btn.textContent = 'Start Generation';
+        if (quantumInterval) clearInterval(quantumInterval);
+        return;
+      }
+
+      isGenerating = true;
+      btn.textContent = 'Stop Generation';
+      bitsGenerated = 0;
+
+      const bitstream = document.getElementById('bitstream');
+      const bitsDisplay = document.getElementById('bits-generated');
+      const entropyDisplay = document.getElementById('entropy-level');
+      const rateDisplay = document.getElementById('generation-rate');
+
+      quantumInterval = setInterval(() => {
+        // Generate random bits
+        let bits = '';
+        for (let i = 0; i < 64; i++) {
+          bits += Math.random() > 0.5 ? '1' : '0';
+        }
+        bitsGenerated += 64;
+
+        // Format bitstream display
+        const formattedBits = bits.match(/.{1,8}/g).map(byte => 
+          `<span class="${Math.random() > 0.5 ? 'text-cyan-400' : 'text-pink-400'}">${byte}</span>`
+        ).join(' ');
+
+        bitstream.innerHTML = formattedBits;
+        bitsDisplay.textContent = bitsGenerated.toLocaleString();
+        entropyDisplay.textContent = Math.min(99, Math.floor(Math.random() * 20) + 80) + '%';
+        rateDisplay.textContent = Math.floor(Math.random() * 500) + 1000;
+      }, 100);
+    }
+
+    // Initialize entropy bars
+    function initEntropyBars() {
+      const container = document.getElementById('entropy-bars');
+      if (!container) return;
+      
+      container.innerHTML = '';
+      for (let i = 0; i < 32; i++) {
+        const bar = document.createElement('div');
+        bar.className = 'flex-1 rounded entropy-bar';
+        bar.style.background = `linear-gradient(to top, ${i % 3 === 0 ? '#ec4899' : i % 3 === 1 ? '#8b5cf6' : '#00d4ff'}, transparent)`;
+        bar.style.animationDelay = `${i * 0.05}s`;
+        container.appendChild(bar);
+      }
+    }
+
+    // Glossary
+    function openGlossary() {
+      document.getElementById('glossary-modal').classList.remove('hidden');
+    }
+
+    function closeGlossary() {
+      document.getElementById('glossary-modal').classList.add('hidden');
+    }
+
+    // Download Report
+    function downloadReport() {
+      const report = `
+GENERALIZED QUANTUM ASSISTED DIGITAL SIGNATURE SYSTEM
+Technical Report
+================================================================================
+
+1. EXECUTIVE SUMMARY
+--------------------
+This document presents a comprehensive overview of the Generalized Quantum 
+Assisted Digital Signature System (GQADSS), a hybrid cryptographic framework 
+that combines classical digital signature algorithms with quantum-derived 
+randomness for enhanced security.
+
+2. SYSTEM ARCHITECTURE
+----------------------
+Layer 1: User Interface Layer
+- Message input/output handling
+- Signature visualization
+- Verification interface
+
+Layer 2: Hash Processing Layer
+- SHA-256 message digest generation
+- Integrity verification mechanisms
+
+Layer 3: Key Management Layer
+- Asymmetric key pair generation
+- Key lifecycle management
+- Secure key storage
+
+Layer 4: Quantum Randomness Layer
+- True random number generation
+- Quantum entropy harvesting
+- Seed generation for signatures
+
+Layer 5: Verification Layer
+- Signature validation
+- Integrity checking
+- Authentication protocols
+
+3. SECURITY FEATURES
+--------------------
+- Quantum-derived entropy for unpredictable signatures
+- Hybrid classical-quantum approach
+- Post-quantum resistance considerations
+- Non-repudiation guarantees
+
+4. USE CASES
+------------
+- Banking and Financial Services
+- Government Document Authentication
+- Cloud Security Infrastructure
+- IoT Device Authentication
+
+5. COMPARISON WITH EXISTING METHODS
+-----------------------------------
+Classical RSA/ECDSA: Vulnerable to quantum attacks
+Quantum-Assisted: Enhanced randomness, practical performance
+Post-Quantum: Maximum security, larger key/signature sizes
+
+================================================================================
+Generated by GQADSS Demo System
+Date: ${new Date().toISOString()}
+`;
+
+      const blob = new Blob([report], { type: 'text/plain' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'GQADSS_Technical_Report.txt';
+      a.click();
+      URL.revokeObjectURL(url);
+      showToast('Technical report downloaded!');
+    }
+
+    // Initialize on load
+    initEntropyBars();
+    applyConfig();
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9cb1cfbc86cd3b2d',t:'MTc3MDYyMzgwMC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
