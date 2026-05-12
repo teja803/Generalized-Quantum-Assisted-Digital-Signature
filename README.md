@@ -16,9 +16,6 @@ This project implements a secure quantum-assisted digital signature framework fo
 - Cryptography
 - Cybersecurity Concepts
 
-## Project Demonstration
-file:///C:/Users/Administrator/Downloads/quantum-signature.html
-
 ## Future Scope
 - Cloud integration
 - Quantum-resistant algorithms
